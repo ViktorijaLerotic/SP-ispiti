@@ -133,7 +133,7 @@ void Print(position root){
 
 }
 void pushInL(position root, positionL head, int value){
-	//bez toha nece radit!!!
+	//bez toga nece radit!!!
 	if(root == NULL){
 		return;
 	}
