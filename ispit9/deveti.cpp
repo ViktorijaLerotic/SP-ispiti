@@ -1,8 +1,8 @@
 /*
-Napisati program koji generira sluèajne brojeve u opsegu od 50-80. Ukoliko je generirani broj paran
-sprema se u vezanu listu parnih brojeva i to u padajuæem redoslijedu (od najveæeg prema najmanjem).
-Ukoliko je broj neparan sprema se u vezanu listu neparnih brojeva, takoğer u padajuæem redoslijedu. Niti
-jedna vezana lista ne smije sadravati dva ista elementa. Unos traje sve dok obje liste ne sadre 10
+Napisati program koji generira sluÃ¨ajne brojeve u opsegu od 50-80. Ukoliko je generirani broj paran
+sprema se u vezanu listu parnih brojeva i to u padajuÃ¦em redoslijedu (od najveÃ¦eg prema najmanjem).
+Ukoliko je broj neparan sprema se u vezanu listu neparnih brojeva, takoÃ°er u padajuÃ¦em redoslijedu. Niti
+jedna vezana lista ne smije sadrÅ¾avati dva ista elementa. Unos traje sve dok obje liste ne sadrÅ¾e 10
 elemenata. Treba ispisivati koji se broj generira i na kraju ispisati obje liste.
 */
 
@@ -108,14 +108,14 @@ void Generate10Numbers(position head){
 
 	int x = 0;
 	
-	for(i = 0; i < 20; i++){
+	for(i = 0; i < 10; i++){
 		position t = (position)malloc(sizeof(_NODE));
 	
 		x = GenerateRadom(50,30);
 		t = Find(head, x);
 	
 		//stavit uvjet ako se poavlja da ponovno generira broj
-		int i = 20;
+		int i = 10;
 		while(i){
 			if(t!= NULL && t->number == x)
 			x = GenerateRadom(50,80);
