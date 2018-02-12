@@ -115,11 +115,11 @@ void Generate10Numbers(position head){
 		t = Find(head, x);
 	
 		//stavit uvjet ako se poavlja da ponovno generira broj
-		int i = 10;
-		while(i){
+		int j = 10;
+		while(j){
 			if(t!= NULL && t->number == x)
 			x = GenerateRadom(50,80);
-			i--;
+			j--;
 		}	
 			
 		q = CreateNode(x);
