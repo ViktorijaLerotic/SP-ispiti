@@ -134,6 +134,7 @@ void AddAtOrder(position head, position element, positionT q){
 		// u ovom ifu ne prepoznaje charove kao pokazivace struktura nego kao a i b	
 	else if(a < b){
 				InsertL(p, element);
+				p->next->myRoot = Insert(p->next->myRoot, q);
 				return;
 				}
 	q->counterT = br;
@@ -165,7 +166,7 @@ void ReadFromFile(position head){
 			
 			//kreiram zasebni cvor liste koji cu kasnije ubaciti prema abecedi u listu
 			p->firstLetter = q->word[0];
-			p->myRoot = q;
+			
 			p->next = NULL;
 			
 			//s ovom funkcijom osim sto po abecedi upisujem pocetna slova takoder gradim stablo ukoliko mi se pocetno slovo ponavlja
