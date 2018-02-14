@@ -28,6 +28,9 @@ void AddAtOrder(position head, position element, positionT q);
 position CreateHead();
 bool isDuplicate(position head, position element);
 void DeleteElement(position head, position ele);
+positionT Find(positionT root, char* word);
+void CountDuplicate(position head);
+void FindDuplicate(positionT root);
 int main(void){
 	
 
@@ -68,10 +71,10 @@ positionT Insert(positionT root, positionT ele){
 		root->left = NULL;
 		root->right = NULL;
 	}
-	else if(strcmpi(ele->word, root->word) < 0)
+	else if(strcmp(ele->word, root->word) < 0)
 		root->left = Insert(root->left, ele);
 		
-	else if(strcmpi(ele->word, root->word) > 0)	
+	else if(strcmp(ele->word, root->word) > 0)	
 		root->right = Insert(root->right, ele);
 		
 	return root;
@@ -108,39 +111,65 @@ void DeleteElement(position head, position ele){
 	
 	
 }
+positionT Find(positionT root, char* word){
+	
+	if(root == NULL) return NULL;
+	
+	else if(strcmp(root->word, word) > 0)
+		return Find(root->left, word);
+		
+	else if (strcmp(root->word, word) < 0)
+		return Find(root->right, word);
+	
+return root;
+	
+}
 void AddAtOrder(position head, position element, positionT q){
 	
 	if(head->next == NULL){
 		InsertL(head, element);
+			q->counterT++;
+			head->next->myRoot = Insert(head->next->myRoot, q);
 		return;
 	}
-	q->counterT = 0;
+	
 	position p = head;
 	char a,b;
 	b = element->firstLetter;
-	int br = 0;
+
 	while(p->next != NULL && element->firstLetter > p->next->firstLetter)
 		p = p->next;
 		
 		a = p->firstLetter; 
 		
-		//u ovom if-u ovako prepoznaje charove a ne kao a i b
-		 if( p->next != NULL && element->firstLetter == p->next->firstLetter){
-		 		p->next->myRoot = Insert(p->next->myRoot, q);
+//u ovom if-u ovako prepoznaje charove a ne kao a i b
+		 if( p->next != NULL && element->firstLetter == p->next->firstLetter)
+		 {			positionT f = (positionT)malloc(sizeof(_TREE));
+					f = Find(p->next->myRoot, q->word);
+					
+					if( f != NULL){
+					f->counterT++;
 					return;
-		 }
+					}
+			 else{
+			 	q->counterT++;
+			 	p->next->myRoot = Insert(p->next->myRoot, q);
+		 		return;
+			 	}
 		 
-		
-		// u ovom ifu ne prepoznaje charove kao pokazivace struktura nego kao a i b	
+		 }
+// u ovom ifu ne prepoznaje charove kao pokazivace struktura nego kao a i b	
 	else if(a < b){
+				q->counterT++;
 				InsertL(p, element);
 				p->next->myRoot = Insert(p->next->myRoot, q);
 				return;
 				}
-	q->counterT = br;
 	
 	InsertL(head, element);
+
 }
+
 
 void ReadFromFile(position head){
 	FILE* f;
@@ -156,19 +185,18 @@ void ReadFromFile(position head){
 		
 		positionT q =(positionT)malloc(sizeof(_TREE));
 		position p =(position)malloc(sizeof(_LIST));
-		
+		q->counterT = 0;
+		p->myRoot = NULL;
+		q->left = NULL;
+		q->right = NULL;
 			if(q && p){
 			br++;
 			//kreiram zasebni cvor stabla koji mora pronaci svoje odgovarajuce stablo i mjesto u njemu
 			fscanf(f, "%s ", q->word);
-			q->left = NULL;
-			q->right = NULL;
-			
 			//kreiram zasebni cvor liste koji cu kasnije ubaciti prema abecedi u listu
 			p->firstLetter = q->word[0];
-			
 			p->next = NULL;
-			
+		
 			//s ovom funkcijom osim sto po abecedi upisujem pocetna slova takoder gradim stablo ukoliko mi se pocetno slovo ponavlja
 			AddAtOrder(head, p, q);
 			
@@ -180,6 +208,7 @@ void ReadFromFile(position head){
 	}
 
 	printf("Broj rijeci koje zapocinju pocetnim slovom je %d\n", brUpp);
+//	CountDuplicate(head);
 	fclose(f);
 	
 }
@@ -206,32 +235,3 @@ void PrintL(position head){
 	}
 
 }
-
-bool isDuplicate(position head, position element){
-	
-	position h = head->next;
-	char a, b;
-	
-	b = element->firstLetter;
-	bool flag = false;
-	while(h != NULL){
-		
-		a = h->firstLetter;
-		
-		if(a == b)
-				flag = true;
-		
-		else
-			flag = false;
-			
-		h = h->next;
-	}
-return flag;
-}
-
-
-
-
-
-
-
